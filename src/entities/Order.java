@@ -55,6 +55,32 @@ public class Order {
 		}
 	}
 	
+	public void validationCard(String card) {
+		 int sum = 0;
+         boolean alternate = false;
+         for (int i = card.length() - 1; i >= 0; i--)
+         {
+                 int n = Integer.parseInt(card.substring(i, i + 1));
+                 if (alternate)
+                 {
+                         n *= 2;
+                         if (n > 9)
+                         {
+                                 n = (n % 10) + 1;
+                         }
+                 }
+                 sum += n;
+                 alternate = !alternate;
+         }
+         if (sum % 10 == 0) {
+        	 this.status =  OrderStatus.valueOf("APPROVED");
+        	 System.out.println("Valid\nStatus " + this.status);
+         }else {
+        	 this.status =  OrderStatus.valueOf("DENIED");
+        	 System.out.println("Invalid\nStatus: "+ this.status);
+         }
+	}
+	
 	public double total() {
 		double sum = 0.0;
 		

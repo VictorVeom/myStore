@@ -63,6 +63,10 @@ public class Main {
 		order.getAllItems();
 		System.out.println("Total Price : " + order.total());
 		
+		System.out.print("Enter your credit card: ");
+		String card = sc.next();
+		order.validationCard(card);
+		
 		
 		sc.close();
 		
