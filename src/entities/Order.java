@@ -45,8 +45,30 @@ public class Order {
 		items.add(item);
 	}
 	
-	public void removeItem(OrderItem item) {
-		items.remove(item);
+	public void removeItem(String name) {
+		OrderItem aux = items.stream().filter(x -> x.getProduct().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+		items.remove(aux);
+	}
+	
+	public void printSummary() {
+		System.out.println("ORDER SUMMARY:");
+		System.out.println();
+		System.out.printf("Data: %s\nStatus: %s\nClient: %s, %s, %s\n", getDate(), getStatus(), client.getName(), sdf.format(client.getBirhDate()), client.getEmail());
+		System.out.println("Ordem items : ");
+		getAllItems();
+		System.out.println("Total Price : " + total());
+		
+	}
+	
+	public void searchItems(String name) {
+		for (OrderItem item : items) {
+			if (item.getProduct().getName().equalsIgnoreCase(name)) {
+				System.out.println("True");
+				name = "True";	
+			}else {
+				name = "False";
+			}
+		}
 	}
 	
 	public void getAllItems() {

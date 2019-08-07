@@ -1,30 +1,32 @@
 package application;
 
-import java.util.Scanner;
-
-import entities.Client;
-import entities.OrderItem;
-import entities.Order;
-import entities.Product;
-import entities.enums.OrderStatus;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
+
+import entities.Client;
+import entities.Order;
+import entities.OrderItem;
+import entities.Product;
+import entities.enums.OrderStatus;
+
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
 		Scanner sc = new Scanner(System.in);
+		
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		System.out.println("Enter Client data: ");
 		System.out.print("Name: ");
 		String name = sc.nextLine();
-		
-		System.out.println("Email: ");
+	
+		System.out.print("Email: ");
 		String email = sc.next();
 		
-		System.out.println("Birth date (DD/MM/YYYY): ");
+		System.out.print("Birth date (DD/MM/YYYY): ");
 		Date birhDate = sdf.parse(sc.next());
 		
 		Client client = new Client(name, email, birhDate);
@@ -34,12 +36,12 @@ public class Main {
 		
 		Order order = new Order(new Date(), status, client);
 		
-		System.out.println("How many items to this order? ");
+		System.out.print("How many items to this order? ");
 		int n = sc.nextInt();
 		
 		for(int i=1; i<=n ; i++) {
 			System.out.println("Enter #" + i + " item data:");
-			System.out.println("Product name: ");
+			System.out.print("Product name: ");
 			sc.nextLine();
 			String productName = sc.nextLine();
 			
@@ -55,13 +57,9 @@ public class Main {
 			
 			order.addItem(items);
 		}
+
 		
-		System.out.println("ORDER SUMMARY:");
-		System.out.println();
-		System.out.printf("Data: %s\nStatus: %s\nClient: %s, %s, %s\n", order.getDate(), order.getStatus(), client.getName(), sdf.format(client.getBirhDate()), client.getEmail());
-		System.out.println("Ordem items : ");
-		order.getAllItems();
-		System.out.println("Total Price : " + order.total());
+		order.printSummary();
 		
 		System.out.print("Enter your credit card: ");
 		String card = sc.next();
