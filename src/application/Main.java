@@ -41,25 +41,42 @@ public class Main {
 		
 		for(int i=1; i<=n ; i++) {
 			System.out.println("Enter #" + i + " item data:");
-			System.out.print("Product name: ");
-			sc.nextLine();
-			String productName = sc.nextLine();
-			
-			System.out.println("Product price: ");
-			double productPrice = sc.nextDouble();
+			String productName = order.addName();
+	        double productPrice = order.addPrice();
+
 			
 			Product product = new Product(productName, productPrice);
-			
-			System.out.println("Product quantity: ");
-			int productQuantity = sc.nextInt();
-			
-			OrderItem items = new OrderItem(productQuantity, productPrice, product);
-			
-			order.addItem(items);
+	        OrderItem items = new OrderItem(order.addQuantity(), productPrice, product);
+	         
+	        order.addItem(items);
 		}
-
+		 order.printSummary();
 		
-		order.printSummary();
+		int opc = 0;
+        while (opc < 2){
+            System.out.print("Enter with: \n1 Edit quantity, 2 Remove item");
+            opc = sc.nextInt();
+            switch(opc){
+                case 1:
+                    OrderItem t = order.searchItems(order.addName());
+                    if (t != null) {
+                        System.out.println("Update: ");
+                        t.setQuantity(order.addQuantity());
+                    }else {
+                        System.out.println("Name of product not exist, try again");
+                    }
+                    System.out.println("Update list Product");
+                    break;
+                case 2:
+                    System.out.print("Remove ");
+                    order.removeItem(order.addName());
+                    opc = 0;
+                default:
+                	order.printSummary();
+                    break;
+            }
+        }
+        
 		
 		System.out.print("Enter your credit card: ");
 		String card = sc.next();

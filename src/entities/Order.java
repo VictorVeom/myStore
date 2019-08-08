@@ -4,10 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import entities.enums.OrderStatus;
 
 public class Order {
+	Scanner sc = new Scanner(System.in);
+	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private Date date;
 	private OrderStatus status;
@@ -21,9 +24,6 @@ public class Order {
 	}
 	public Date getDate() {
 		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
 	}
 	public OrderStatus getStatus() {
 		return status;
@@ -39,6 +39,26 @@ public class Order {
 	}
 	public List<OrderItem> getOrdemItem() {
 		return items;
+	}
+	
+	public String addName() {
+		System.out.print("Product name: ");
+		String debug = sc.nextLine();
+		return debug;
+		
+	}
+	
+	public double addPrice() {
+		System.out.print("Product price: ");
+		double price = sc.nextDouble();
+		return price;
+	}
+	
+	public int addQuantity() {
+		System.out.print("Product quantity: ");
+		int quantity = sc.nextInt();
+		 sc.nextLine();
+		return quantity;
 	}
 	
 	public void addItem(OrderItem item) {
@@ -60,15 +80,9 @@ public class Order {
 		
 	}
 	
-	public void searchItems(String name) {
-		for (OrderItem item : items) {
-			if (item.getProduct().getName().equalsIgnoreCase(name)) {
-				System.out.println("True");
-				name = "True";	
-			}else {
-				name = "False";
-			}
-		}
+	public OrderItem searchItems(String name) {
+		OrderItem aux = items.stream().filter(x -> x.getProduct().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+		return aux;
 	}
 	
 	public void getAllItems() {
