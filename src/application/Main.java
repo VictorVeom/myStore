@@ -30,61 +30,72 @@ public class Main {
 		Date birhDate = sdf.parse(sc.next());
 		
 		Client client = new Client(name, email, birhDate);
-		
-		System.out.println("Enter order data:");
 		OrderStatus status = OrderStatus.valueOf("PEDDING_PAYMENT");
 		
 		Order order = new Order(new Date(), status, client);
 		
-		System.out.print("How many items to this order? ");
-		int n = sc.nextInt();
-		
-		for(int i=1; i<=n ; i++) {
-			System.out.println("Enter #" + i + " item data:");
-			String productName = order.addName();
-	        double productPrice = order.addPrice();
-
-			
-			Product product = new Product(productName, productPrice);
-	        OrderItem items = new OrderItem(order.addQuantity(), productPrice, product);
-	         
-	        order.addItem(items);
-		}
-		 order.printSummary();
-		
 		int opc = 0;
-        while (opc < 2){
-            System.out.print("Enter with: \n1 Edit quantity, 2 Remove item");
+        while (opc <= 4){
+            System.out.print("Enter: \n1 Add item, 2 Remove item, 3 Edit quantity, 4 Edit price or other number to payment ");
             opc = sc.nextInt();
             switch(opc){
-                case 1:
+            	case 1:
+            		System.out.println("Enter order data:");
+            		System.out.print("How many items to this order? ");
+            		int n = sc.nextInt();
+            		
+            		for(int i=1; i<=n ; i++) {
+            			System.out.println("Enter #" + i + " item data:");
+            			String productName = order.addName();
+            	        double productPrice = order.addPrice();
+
+            	        Product product = new Product(productName, productPrice);
+            	        OrderItem items = new OrderItem(order.addQuantity(), productPrice, product);
+            	        order.addItem(items);
+            		}
+            		 order.printSummary();
+            		
+            		 break;
+                case 2:
+                    System.out.print("Remove ");
+                    order.removeItem(order.addName());
+                    System.out.println("Updated Product List");
+                    order.printSummary();
+                    break;
+                case 3:
                     OrderItem t = order.searchItems(order.addName());
                     if (t != null) {
                         System.out.println("Update: ");
                         t.setQuantity(order.addQuantity());
+                        System.out.println("Updated Product List");
+                        order.printSummary();
                     }else {
-                        System.out.println("Name of product not exist, try again");
+                        System.out.println("Product name does not exist, try again");
                     }
-                    System.out.println("Update list Product");
                     break;
-                case 2:
-                    System.out.print("Remove ");
-                    order.removeItem(order.addName());
-                    opc = 0;
+                case 4:
+                	t = order.searchItems(order.addName());
+                	if (t != null) {
+                		System.out.println("Update price: ");
+                		t.setPrice(order.addPrice());
+                		System.out.println("Updated Product List");
+                        order.printSummary();
+                	}else {
+                        System.out.println("Product name does not exist, try again");
+                    }
+                	break;
                 default:
                 	order.printSummary();
-                    break;
+                	break;
+                } 
             }
-        }
         
 		
 		System.out.print("Enter your credit card: ");
 		String card = sc.next();
 		order.validationCard(card);
 		
-		
-		sc.close();
-		
+		sc.close();	
 	}
 
 }
