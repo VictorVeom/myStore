@@ -54,7 +54,6 @@ public class Main {
             	        order.addItem(items);
             		}
             		 order.printSummary();
-            		
             		 break;
                 case 2:
                     System.out.print("Remove ");
@@ -65,7 +64,7 @@ public class Main {
                 case 3:
                     OrderItem t = order.searchItems(order.addName());
                     if (t != null) {
-                        System.out.println("Update: ");
+                    	System.out.print("Edit ");
                         t.setQuantity(order.addQuantity());
                         System.out.println("Updated Product List");
                         order.printSummary();
@@ -76,7 +75,7 @@ public class Main {
                 case 4:
                 	t = order.searchItems(order.addName());
                 	if (t != null) {
-                		System.out.println("Update price: ");
+                		System.out.println("Edit ");
                 		t.setPrice(order.addPrice());
                 		System.out.println("Updated Product List");
                         order.printSummary();

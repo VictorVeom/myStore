@@ -67,7 +67,11 @@ public class Order {
 	
 	public void removeItem(String name) {
 		OrderItem aux = items.stream().filter(x -> x.getProduct().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+		if (aux != null) {
 		items.remove(aux);
+		}else {
+			System.out.println("Product name does not exist, try again");
+		}
 	}
 	
 	public void printSummary() {
